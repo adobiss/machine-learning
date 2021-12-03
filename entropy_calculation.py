@@ -2,7 +2,7 @@ import math
 from PIL import Image
 
 myImage = Image.open("D:\ML\Datasets\dec_tree_dataset_example.png")
-#myImage.show()
+myImage.show()
 
 # In a set of binary classes (one or the other) of YES or NO,
 # 9/14 are YES and 5/14 are NO ('Play Tennis' feature).
