@@ -38,17 +38,17 @@ W = tf.Variable(np.random.randn(),name="W", dtype=tf.float64 ) # the variable W 
 b = tf.Variable(np.random.randn(),name="b", dtype=tf.float64 ) # the variable b denotes -> bias
 
 learning_rate = 0.01
-training_epochs = 100
+training_epochs = 1
 
 # building the hypothesis -> relationship between x and y
 y_pred = tf.add(tf.multiply(X, W), b) # predicted y is the sum of (the product of X and W) and (b)
 
 # Mean Squared Error Cost Function -> formula to determine value of the weight and bias from the given dataset
-cost = tf.reduce_sum(tf.pow(y_pred - Y, 2)) / (2 * n)
+cost = tf.reduce_sum(tf.pow(y_pred - Y, 2)) / (2 * n) # "2 * n" vs "n" so that it is easier to take the derrivative
 
 """
 tf.pow works out the the power of one tensor with another similar to how in
-algebra xy would work -> then reduce_sum finds the sum of the
+algebra x^y would work -> then reduce_sum finds the sum of the
 elements across dimensions.
 """
 
@@ -68,6 +68,7 @@ with tf.Session() as sess:
         for (_x, _y) in zip(x, y):
             # for in zip merges the two lists here together
             sess.run(optimizer, feed_dict = {X : _x, Y : _y})
+            print(sess.run(W), sess.run(b))
         # Displaying the result after every 50 epochs
         if (epoch + 1) % 50 == 0:
             # Calculating the cost of every epoch
@@ -85,5 +86,57 @@ print("Training cost =", training_cost , "Weight =", weight, "bias =", bias, '\n
 plt.plot(x, y, 'ro ', label='Original data ') # ro -> red circle with a label of Original data
 plt.plot(x, predictions, label='Fitted line ')
 plt.title('Linear Regression Result ')
-plt.legend () # displays small box containing description of the graph elements for example red dot denotes Original data
-plt.show ()
+plt.legend() # displays small box containing description of the graph elements for example red dot denotes Original data
+plt.show()
+
+
+"""
+tf.sqrt(tf.reduce_mean(tf.squared_difference(y, y_pred)))
+
+###################3
+
+# y_true -> Y
+# y_pred -> y_pred
+
+TP = tf.count_nonzero(y_pred * Y)
+TN = tf.count_nonzero((y_pred - 1) * (Y - 1))
+FP = tf.count_nonzero(y_pred * (Y - 1))
+FN = tf.count_nonzero((y_pred - 1) * Y)
+
+precision = TP / (TP + FP)
+recall = TP / (TP + FN)
+f1 = 2 * precision * recall / (precision + recall)
+
+TP = tf.get_static_value(TP)
+TN = tf.get_static_value(TN)
+FP = tf.get_static_value(FP)
+FN = tf.get_static_value(FN)
+precision = tf.get_static_value(precision)
+recall = tf.get_static_value(recall)
+f1 = tf.get_static_value(f1)
+
+print (TP, TN, FP, FN, precision, recall, f1)
+
+def perf_measure(Y, y_pred):
+    TP = 0
+    FP = 0
+    TN = 0
+    FN = 0
+
+    for i in range(len(y_pred)): 
+        if Y[i]==y_pred[i]==1:
+           TP += 1
+        if y_pred[i]==1 and Y[i]!=y_pred[i]:
+           FP += 1
+        if Y[i]==y_pred[i]==0:
+           TN += 1
+        if y_pred[i]==0 and Y[i]!=y_pred[i]:
+           FN += 1
+
+    return(TP, FP, TN, FN)
+print ("TP: ", TP)
+
+######
+# changed float type to 64 because was getting dtype conflict and code is working now but im not
+# getting the right answer
+"""
