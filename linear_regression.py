@@ -12,7 +12,7 @@ np.random.seed(101)
 tf.set_random_seed(101) # sets the global random seed
 # generate 100 random linear data points ranging from 0 to 25
 x = np.linspace(0, 25, 100)
-y = np.linspace(0, 25, 100) 
+y = np.linspace(100, 250, 100) 
 # add noise to the random linear data
 x += np.random.uniform (-4, 4, 100)
 y += np.random.uniform (-4, 4, 100)
@@ -37,8 +37,8 @@ Y = tf.placeholder(dtype=tf.float64) # placeholder Y of type float
 W = tf.Variable(np.random.randn(),name="W", dtype=tf.float64 ) # the variable W denotes weight
 b = tf.Variable(np.random.randn(),name="b", dtype=tf.float64 ) # the variable b denotes -> bias
 
-learning_rate = 0.01
-training_epochs = 1
+learning_rate = 0.1
+training_epochs = 100
 
 # building the hypothesis -> relationship between x and y
 y_pred = tf.add(tf.multiply(X, W), b) # predicted y is the sum of (the product of X and W) and (b)
