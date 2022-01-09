@@ -11,3 +11,5 @@
 feature_extraction/.ipynb_checkpoints/LDA-checkpoint.ipynb
 feature_extraction/.ipynb_checkpoints/principal_component_analysis-checkpoint.ipynb
 tree_based_algorithms/.ipynb_checkpoints/random_forest-checkpoint.ipynb
+.ipynb_checkpoints/dim_reduction_functions-checkpoint.ipynb
+.ipynb_checkpoints/XGBoost-checkpoint.ipynb
